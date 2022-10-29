@@ -14,3 +14,5 @@ def notify(title, text):
         )
     elif system().lower() == "linux":
         os.system('notify-send "{}" "{}"'.format(title, text))
+
+    print("\a")
