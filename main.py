@@ -1,9 +1,17 @@
 from utils.time_extractor import time_extractor
+from utils.notification import notify
 from tqdm import tqdm
 import time
 
 
 def work_session(work_t: int):
+    "work time session counter"
+
+    notify(
+        title="Work Time Starting",
+        text="Break-Timer",
+    )
+
     for work in (pbar := tqdm(range(work_t), leave=False)):
         pbar.set_description_str(f"Work Time Session ({work} seconds passed)")
         pbar.refresh()
@@ -11,6 +19,12 @@ def work_session(work_t: int):
 
 
 def break_session(break_t: int):
+    "break time session counter"
+
+    notify(
+        title="Break Time Starting",
+        text="Break-Timer",
+    )
     for _break in (pbar := tqdm(range(break_t), leave=False)):
         pbar.set_description_str(f"Work Time Session ({_break} seconds passed)")
         pbar.refresh()
@@ -18,16 +32,26 @@ def break_session(break_t: int):
 
 
 def main(opt):
+    "main"
     session_count = opt.session_time
     work_t = time_extractor(opt.work_time)
     break_t = time_extractor(opt.break_time)
 
     for sess in (pbar := tqdm(range(session_count), leave=True)):
-        pbar.set_description_str(f"{sess}. work session started.. ")
+        pbar.set_description_str(
+            f"{sess}. {opt.work_time} long work session started.. "
+        )
         work_session(work_t)
-        pbar.set_description_str(f"{sess}. break time session started..")
+        pbar.set_description_str(
+            f"{sess}. {opt.break_time} break time session started.."
+        )
         break_session(break_t)
         pbar.refresh()
+
+    notify(
+        title="All Sessions Are Done, Well Done 👏",
+        text="Break-Timer",
+    )
 
 
 if __name__ == "__main__":
