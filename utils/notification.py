@@ -3,7 +3,7 @@ from platform import system
 
 
 def notify(title, text):
-    if system() == "darwin":
+    if system().lower() == "darwin":
         os.system(
             """
                   osascript -e 'display notification "{}" with title "{}"'
@@ -12,5 +12,5 @@ def notify(title, text):
                 text, title
             )
         )
-    elif system() == "linux":
+    elif system().lower() == "linux":
         os.system('notify-send "{}" "{}"'.format(title, text))
