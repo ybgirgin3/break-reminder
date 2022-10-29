@@ -9,7 +9,7 @@ def work_session(work_t: int):
 
     notify(
         title="Work Time Starting",
-        text="Break-Timer",
+        text=opt.session_name,
     )
 
     for work in (pbar := tqdm(range(work_t), leave=False)):
@@ -23,7 +23,7 @@ def break_session(break_t: int):
 
     notify(
         title="Break Time Starting",
-        text="Break-Timer",
+        text=opt.session_name,
     )
     for _break in (pbar := tqdm(range(break_t), leave=False)):
         pbar.set_description_str(f"Work Time Session ({_break} seconds passed)")
@@ -50,7 +50,7 @@ def main(opt):
 
     notify(
         title="All Sessions Are Done, Well Done 👏",
-        text="Break-Timer",
+        text=opt.session_name,
     )
 
 
@@ -59,6 +59,12 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--session-name",
+        type=str,
+        default="Break-Reminder-Default-Session",  # 8 hours to default
+        help="How many session do you plan to work (hour(s))",
+    )
     parser.add_argument(
         "--session-time",
         type=int,
