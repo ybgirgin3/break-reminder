@@ -1,5 +1,6 @@
 from utils.time_extractor import time_extractor
 from utils.notification import notify
+from utils.progress import progress
 from tqdm import tqdm
 import time
 
@@ -12,10 +13,12 @@ def work_session(work_t: int):
         text=opt.session_name,
     )
 
-    for work in (pbar := tqdm(range(work_t), leave=False)):
-        pbar.set_description_str(f"Work Time Session ({work} seconds passed)")
-        pbar.refresh()
-        time.sleep(1)
+    progress(time_val=work_t, desc="Work Time Session", leave=False)
+
+    # for work in (pbar := tqdm(range(work_t), leave=False)):
+    #     pbar.set_description_str(f"Work Time Session ({work} seconds passed)")
+    #     pbar.refresh()
+    #     time.sleep(1)
 
 
 def break_session(break_t: int):
@@ -25,10 +28,13 @@ def break_session(break_t: int):
         title="Break Time Starting",
         text=opt.session_name,
     )
-    for _break in (pbar := tqdm(range(break_t), leave=False)):
-        pbar.set_description_str(f"Work Time Session ({_break} seconds passed)")
-        pbar.refresh()
-        time.sleep(1)
+
+    progress(time_val=break_t, desc="Break Time Session", leave=False)
+
+    # for _break in (pbar := tqdm(range(break_t), leave=False)):
+    #     pbar.set_description_str(f"Break Time Session ({_break} seconds passed)")
+    #     pbar.refresh()
+    #     time.sleep(1)
 
 
 def main(opt):
