@@ -15,11 +15,6 @@ def work_session(work_t: int):
 
     progress(time_val=work_t, desc="Work Time Session", leave=False)
 
-    # for work in (pbar := tqdm(range(work_t), leave=False)):
-    #     pbar.set_description_str(f"Work Time Session ({work} seconds passed)")
-    #     pbar.refresh()
-    #     time.sleep(1)
-
 
 def break_session(break_t: int):
     "break time session counter"
@@ -31,11 +26,6 @@ def break_session(break_t: int):
 
     progress(time_val=break_t, desc="Break Time Session", leave=False)
 
-    # for _break in (pbar := tqdm(range(break_t), leave=False)):
-    #     pbar.set_description_str(f"Break Time Session ({_break} seconds passed)")
-    #     pbar.refresh()
-    #     time.sleep(1)
-
 
 def main(opt):
     "main"
@@ -43,16 +33,20 @@ def main(opt):
     work_t = time_extractor(opt.work_time)
     break_t = time_extractor(opt.break_time)
 
-    for sess in (pbar := tqdm(range(session_count), leave=True)):
-        pbar.set_description_str(
-            f"{sess}. {opt.work_time} long work session started.. "
-        )
-        work_session(work_t)
-        pbar.set_description_str(
-            f"{sess}. {opt.break_time} break time session started.."
-        )
-        break_session(break_t)
-        pbar.refresh()
+    # FIXME: ana progress bar iki tane zaman içeriyor bunları
+    # harici fonksiyonla nasıl yapabiliriz ona bakmam lazım
+    progress(time_val=session_count, desc="Main Session", leave=True)
+
+    # for sess in (pbar := tqdm(range(session_count), leave=True)):
+    #     pbar.set_description_str(
+    #         f"{sess}. {opt.work_time} long work session started.. "
+    #     )
+    #     work_session(work_t)
+    #     pbar.set_description_str(
+    #         f"{sess}. {opt.break_time} break time session started.."
+    #     )
+    #     break_session(break_t)
+    #     pbar.refresh()
 
     notify(
         title="All Sessions Are Done, Well Done 👏",
