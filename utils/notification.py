@@ -13,4 +13,4 @@ def notify(title, text):
             )
         )
     elif system().lower() == "linux":
-        os.system('notify-send "{}" "{}"'.format(title, text))
+        os.system('notify-send "{}" "{}" --expire-time 500'.format(title, text))
