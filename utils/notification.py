@@ -15,4 +15,8 @@ def notify(title, text):
     elif system().lower() == "linux":
         os.system('notify-send "{}" "{}"'.format(title, text))
 
+    else: # windows
+        from winotify import Notification
+        Notification(app_id="Break Reminder", title=f"{title}", msg=f"{text}")
+
     print("\a")
