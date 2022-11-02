@@ -49,14 +49,18 @@ def main(opt):
         pbar.set_description_str(
             f"{sess}. {' '.join(opt.work_time.split('_'))} long work session progress: "
         )
-        if session(session_name="work", time_val=work_time):  ## work time
+        if session(
+            session_name=opt.session_name, desc="Work Time", time_val=work_time
+        ):  ## work time
             print(colored("\nWork session done", "yellow"))
 
         # start break session
         pbar.set_description_str(
             f"{sess}. {' '.join(opt.break_time.split('_'))} long break session progress: "
         )
-        if session(session_name="break", time_val=break_time):  ## break time
+        if session(
+            session_name=opt.session_name, desc="Break Time", time_val=break_time
+        ):  ## break time
             print(colored("\nBreak session done", "yellow"))
 
 
