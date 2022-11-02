@@ -1,4 +1,5 @@
 from platform import system
+from utils.alert import alert
 
 
 # FIXME: icon needed 🔔
@@ -21,3 +22,5 @@ def notify(title, text):
         from winotify import Notification
 
         Notification(app_id="Break Reminder", title=f"{title}", msg=f"{text}")
+
+    alert()  ## play sound for notification
