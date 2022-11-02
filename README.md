@@ -61,7 +61,7 @@ coming soon...
 
 
 ## Known Issues
-* Pydub playing audio output requires to modify one of library files.
+* Pydub playing audio output requires to modify one of library files.<br>
   |_ using with output issue.
   * How to solve by hand:
   * Regarding to this issue [#247](https://github.com/jiaaro/pydub/issues/247#issuecomment-791768412)
