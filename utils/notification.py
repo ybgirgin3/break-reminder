@@ -9,7 +9,6 @@ def notify(title, text):
         os.system(
             """
                   osascript -e 'display notification "{}" with title "{}"'
-
             """.format(
                 text, title
             )
@@ -17,7 +16,7 @@ def notify(title, text):
     elif system().lower() == "linux":
         import os
 
-        os.system('notify-send "{}" "{}"'.format(title, text))
+        os.system('notify-send "{}" "{}" -t 500'.format(title, text))
     else:  # windows
         from winotify import Notification
 
