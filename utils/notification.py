@@ -4,6 +4,7 @@ from utils.alert import alert
 
 # FIXME: icon needed 🔔
 def notify(title, text):
+    "system notification when session starts or ends"
     if system().lower() == "darwin":
         import os
 

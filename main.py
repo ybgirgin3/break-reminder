@@ -2,20 +2,9 @@ from utils.time_extractor import lunch_time, time_extractor
 from utils.notification import notify
 from utils.sessions import session
 from utils.progress import progress
+from utils import log
 from termcolor import colored
 from tqdm import tqdm
-
-
-def log(opt) -> None:
-    "info about work session"
-    print(
-        f"""
-        Session Name: {opt.session_name}
-        Total Work Time: {" ".join(opt.work_time.split("_"))}
-        Total Break Time: {" ".join(opt.break_time.split("_"))}
-        Full Day Of Work?: {'Yes' if opt.full else 'No'}
-    """
-    )
 
 
 def main(opt):
