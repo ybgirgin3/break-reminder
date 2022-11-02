@@ -1,72 +1,63 @@
 from utils.time_extractor import lunch_time, time_extractor
 from utils.notification import notify
+from utils.sessions import session
 from utils.progress import progress
+from termcolor import colored
 from tqdm import tqdm
-import time
 
 
-def work_session(work_t: int):
-    "work time session counter"
-
-    notify(
-        title="Work Time Starting",
-        text=opt.session_name,
+def log(opt) -> None:
+    "info about work session"
+    print(
+        f"""
+        Session Name: {opt.session_name}
+        Total Work Time: {" ".join(opt.work_time.split("_"))}
+        Total Break Time: {" ".join(opt.break_time.split("_"))}
+        Full Day Of Work?: {'Yes' if opt.full else 'No'}
+    """
     )
-
-    progress(time_val=work_t, desc="Work Time Session", leave=False)
-
-
-def break_session(break_t: int, big_break: bool = False):
-    "break time session counter"
-
-    if big_break:
-        break_t = 60
-
-    notify(
-        title="Break Time Starting",
-        text=opt.session_name,
-    )
-
-    progress(time_val=break_t, desc="Break Time Session", leave=False)
 
 
 def main(opt):
     "main"
+    log(opt)
     session_count = opt.session_time
-    big_break = lunch_time(opt.session_time)
-    work_t = time_extractor(opt.work_time)
-    break_t = time_extractor(opt.break_time)
-    if opt.full:
-        print("full day of working starts..")
+    lunch_break = lunch_time(opt.session_time)
+    work_time = time_extractor(opt.work_time)
+    break_time = time_extractor(opt.break_time)
 
-    # FIXME: ana progress bar iki tane zaman içeriyor bunları
-    # harici fonksiyonla nasıl yapabiliriz ona bakmam lazım
-    # progress(time_val=session_count, desc="Main Session", leave=True)
+    # * session starts..
+    for sess in (
+        pbar := tqdm(range(session_count), leave=True)
+    ):  ## * main pbar always on the top
 
-    for sess in (pbar := tqdm(range(session_count), leave=True)):
-        if (sess == big_break) and opt.full:
-            desc = f"{sess}. Lunch Timeeeee 🧆"
-            progress(time_val=big_break, desc=desc, leave=False)
+        # lunch break 🥞
+        if (sess == lunch_break) and opt.full:
+            print("full of day of working starting....")
 
+            # create progress bar for lunch_break
+            pbar_desc = f"{sess}. lunch break 🥞"
+            progress(time_val=lunch_break, desc=pbar_desc, leave=False)
+
+            # notify
             notify(
-                title=desc,
+                title=pbar_desc,
                 text=opt.session_name,
             )
 
+        # start work sessions
         pbar.set_description_str(
-            f"{sess}. {opt.work_time} long work session started.. "
+            f"{sess}. {' '.join(opt.work_time.split('_'))} long work session progress: "
         )
-        work_session(work_t)
-        pbar.set_description_str(
-            f"{sess}. {opt.break_time} break time session started.."
-        )
-        break_session(break_t)
-        pbar.refresh()
+        if session(session_name="work", time_val=work_time):  ## work time
+            print(colored("\nWork session done", "yellow"))
 
-    notify(
-        title="All Sessions Are Done, Well Done 👏",
-        text=opt.session_name,
-    )
+        # start break session
+        pbar.set_description_str(
+            f"{sess}. {' '.join(opt.break_time.split('_'))} long break session progress: "
+        )
+        if session(session_name="break", time_val=break_time):  ## break time
+            print(colored("\nBreak session done", "yellow"))
 
 
 if __name__ == "__main__":

@@ -31,4 +31,4 @@ def lunch_time(session_time: int):
 
     import math
 
-    return math.ceil(session_time / 2), _time_diff(session_time)
+    return math.ceil(session_time / 2)  # , _time_diff(session_time)
