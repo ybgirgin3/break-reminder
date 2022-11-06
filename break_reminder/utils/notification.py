@@ -3,7 +3,7 @@ from utils.alert import alert
 
 
 # FIXME: icon needed 🔔
-def notify(title, text):
+def notify(title, text, alert_sound):
     "system notification when session starts or ends"
     if system().lower() == "darwin":
         import os
@@ -24,4 +24,4 @@ def notify(title, text):
 
         Notification(app_id="Break Reminder", title=f"{title}", msg=f"{text}")
 
-    alert()  ## play sound for notification
+    alert(alert=alert_sound)  ## play sound for notification
